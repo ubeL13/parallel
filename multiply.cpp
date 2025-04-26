@@ -1,0 +1,109 @@
+#include <iostream>
+#include <fstream>
+#include <vector>
+#include <chrono>
+#include <cstdlib>
+#include <cassert>
+#include <iomanip>
+#include <string>
+#include <filesystem>
+
+namespace fs = std::filesystem;
+using namespace std;
+
+// Функция для чтения матрицы из файла
+vector<vector<double>> readMatrix(const string& filename) {
+    ifstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Cannot open file " << filename << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    size_t rows, cols;
+    file >> rows >> cols;
+    vector<vector<double>> matrix(rows, vector<double>(cols));
+
+    for (size_t i = 0; i < rows; ++i)
+        for (size_t j = 0; j < cols; ++j)
+            file >> matrix[i][j];
+
+    return matrix;
+}
+
+// Функция для записи матрицы в файл
+void writeMatrix(const string& filename, const vector<vector<double>>& matrix) {
+    ofstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Cannot open file " << filename << endl;
+        exit(EXIT_FAILURE);
+    }
+
+    size_t rows = matrix.size(), cols = matrix[0].size();
+    file << rows << " " << cols << endl;
+    for (const auto& row : matrix) {
+        for (const auto& val : row)
+            file << setprecision(6) << val << " ";
+        file << endl;
+    }
+}
+
+// Функция для записи времени выполнения и размера задачи
+void writeTimeAndSize(const string& filename, double time_sec, size_t rowsA, size_t colsA, size_t rowsB, size_t colsB) {
+    ofstream file(filename);
+    if (!file.is_open()) {
+        cerr << "Cannot open file " << filename << endl;
+        exit(EXIT_FAILURE);
+    }
+    file << "Matrix A: " << rowsA << "x" << colsA << endl;
+    file << "Matrix B: " << rowsB << "x" << colsB << endl;
+    file << "Execution Time (s): " << time_sec << endl;
+}
+
+// Функция для перемножения матриц
+vector<vector<double>> multiplyMatrices(const vector<vector<double>>& A, const vector<vector<double>>& B) {
+    size_t n = A.size(), m = A[0].size(), p = B[0].size();
+    assert(m == B.size());
+
+    vector<vector<double>> C(n, vector<double>(p, 0.0));
+
+    for (size_t i = 0; i < n; ++i)
+        for (size_t j = 0; j < p; ++j)
+            for (size_t k = 0; k < m; ++k)
+                C[i][j] += A[i][k] * B[k][j];
+
+    return C;
+}
+
+int main() {
+    int test_id = 1;
+    while (true) {
+        string fileA = "matrices/matrixA_" + to_string(test_id) + ".txt";
+        string fileB = "matrices/matrixB_" + to_string(test_id) + ".txt";
+        string fileC = "matrices/matrixC_" + to_string(test_id) + ".txt";
+        string fileTime = "matrices/time_" + to_string(test_id) + ".txt";
+
+        if (!fs::exists(fileA) || !fs::exists(fileB)) {
+            cout << "Finished processing all available matrix files." << endl;
+            break;
+        }
+
+        auto A = readMatrix(fileA);
+        auto B = readMatrix(fileB);
+
+        cout << "Processing Test " << test_id << ": " << fileA << " x " << fileB << endl;
+
+        auto start = chrono::high_resolution_clock::now();
+        auto C = multiplyMatrices(A, B);
+        auto end = chrono::high_resolution_clock::now();
+
+        chrono::duration<double> elapsed = end - start;
+        cout << "Execution time: " << elapsed.count() << " seconds." << endl;
+
+        writeMatrix(fileC, C);
+        writeTimeAndSize(fileTime, elapsed.count(), A.size(), A[0].size(), B.size(), B[0].size());
+
+        test_id++;
+    }
+
+    return 0;
+}
