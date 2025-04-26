@@ -1,10 +1,8 @@
 import numpy as np
 import os
 
-# Параметры генерации: размеры квадратных матриц от 100 до 1000 с шагом 100
-sizes = list(range(100, 1100, 100))
+sizes = list(range(100, 2200, 200))
 
-# Папка для файлов
 os.makedirs("matrices", exist_ok=True)
 
 for idx, size in enumerate(sizes, 1):

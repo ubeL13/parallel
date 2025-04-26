@@ -2,11 +2,10 @@ import os
 import re
 import matplotlib.pyplot as plt
 
-# Папка с матрицами и таймингами
-folder = "matrices"
+folder = "results"
 
-sizes = []  # размер матрицы (число строк)
-times = []  # время выполнения
+sizes = []  
+times = [] 
 
 idx = 1
 while True:
@@ -17,7 +16,6 @@ while True:
     with open(fileTime, 'r') as f:
         content = f.read()
 
-        # Находим размеры и время через регулярные выражения
         match_size = re.search(r"Matrix A: (\d+)x(\d+)", content)
         match_time = re.search(r"Execution Time \(s\): ([\d\.]+)", content)
 
@@ -30,7 +28,6 @@ while True:
 
     idx += 1
 
-# Строим график
 plt.figure(figsize=(8, 6))
 plt.plot(sizes, times, marker='o')
 plt.title('Matrix Size vs Execution Time')

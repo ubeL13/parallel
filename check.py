@@ -1,10 +1,9 @@
 import numpy as np
 import os
 
-# Папка с матрицами
-folder = "matrices"
+matrices_folder = "matrices"
+results_folder = "results"
 
-# Порог для сравнения чисел с плавающей точкой
 EPSILON = 1e-4
 
 def read_matrix(filename):
@@ -23,9 +22,9 @@ all_passed = True
 report_lines = []
 
 while True:
-    fileA = os.path.join(folder, f"matrixA_{idx}.txt")
-    fileB = os.path.join(folder, f"matrixB_{idx}.txt")
-    fileC = os.path.join(folder, f"matrixC_{idx}.txt")
+    fileA = os.path.join(matrices_folder, f"matrixA_{idx}.txt")
+    fileB = os.path.join(matrices_folder, f"matrixB_{idx}.txt")
+    fileC = os.path.join(results_folder, f"matrixC_{idx}.txt")
 
     if not os.path.exists(fileA) or not os.path.exists(fileB) or not os.path.exists(fileC):
         break
@@ -42,16 +41,20 @@ while True:
     else:
         print(f"Test {idx}: FAILED")
         report_lines.append(f"Test {idx}: FAILED\n")
+        report_lines.append("Matrix calculated by C++:\n")
+        report_lines.append(np.array2string(C_cpp, precision=4, separator=' ') + "\n")
+        report_lines.append("Matrix calculated by Python:\n")
+        report_lines.append(np.array2string(C_ref, precision=4, separator=' ') + "\n")
         all_passed = False
 
     idx += 1
 
 # Записываем отчёт в файл
-report_file = os.path.join(folder, "verification_report.txt")
+report_file = os.path.join(results_folder, "verification_report.txt")
 with open(report_file, "w") as f:
     f.writelines(report_lines)
 
 if all_passed:
     print("\nAll tests passed successfully!")
 else:
-    print("\nSome tests failed. Check your multiplication implementation.")
+    print("\nSome tests failed. Check report")

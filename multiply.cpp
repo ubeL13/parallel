@@ -6,12 +6,15 @@
 #include <cassert>
 #include <iomanip>
 #include <string>
-#include <filesystem>
+#include <sys/stat.h> 
 
-namespace fs = std::filesystem;
 using namespace std;
 
-// Функция для чтения матрицы из файла
+bool file_exists(const string& filename) {
+    struct stat buffer;
+    return (stat(filename.c_str(), &buffer) == 0);
+}
+
 vector<vector<double>> readMatrix(const string& filename) {
     ifstream file(filename);
     if (!file.is_open()) {
@@ -47,7 +50,6 @@ void writeMatrix(const string& filename, const vector<vector<double>>& matrix) {
     }
 }
 
-// Функция для записи времени выполнения и размера задачи
 void writeTimeAndSize(const string& filename, double time_sec, size_t rowsA, size_t colsA, size_t rowsB, size_t colsB) {
     ofstream file(filename);
     if (!file.is_open()) {
@@ -59,7 +61,6 @@ void writeTimeAndSize(const string& filename, double time_sec, size_t rowsA, siz
     file << "Execution Time (s): " << time_sec << endl;
 }
 
-// Функция для перемножения матриц
 vector<vector<double>> multiplyMatrices(const vector<vector<double>>& A, const vector<vector<double>>& B) {
     size_t n = A.size(), m = A[0].size(), p = B[0].size();
     assert(m == B.size());
@@ -75,14 +76,17 @@ vector<vector<double>> multiplyMatrices(const vector<vector<double>>& A, const v
 }
 
 int main() {
+  
+    system("mkdir -p results");
+    
     int test_id = 1;
     while (true) {
         string fileA = "matrices/matrixA_" + to_string(test_id) + ".txt";
         string fileB = "matrices/matrixB_" + to_string(test_id) + ".txt";
-        string fileC = "matrices/matrixC_" + to_string(test_id) + ".txt";
-        string fileTime = "matrices/time_" + to_string(test_id) + ".txt";
+        string fileC = "results/matrixC_" + to_string(test_id) + ".txt";
+        string fileTime = "results/time_" + to_string(test_id) + ".txt";
 
-        if (!fs::exists(fileA) || !fs::exists(fileB)) {
+        if (!file_exists(fileA) || !file_exists(fileB)) {
             cout << "Finished processing all available matrix files." << endl;
             break;
         }
