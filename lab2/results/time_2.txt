@@ -1,0 +1,3 @@
+Matrix A: 300x300
+Matrix B: 300x300
+Execution Time (s): 0.068802

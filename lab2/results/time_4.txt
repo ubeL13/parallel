@@ -1,0 +1,3 @@
+Matrix A: 700x700
+Matrix B: 700x700
+Execution Time (s): 0.839434
