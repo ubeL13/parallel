@@ -10,6 +10,15 @@
 
 ---
 
+## Системная конфигурация
+
+| Parameter           | Value                            |
+|---------------------|----------------------------------|
+| CPU                 | AMD Ryzen 5 5500U                |
+| Physical Cores      | 6                                |
+| Threads (Logical)   | 12                               |
+| OS                  | Fedora Linux 41 (Workstation Edition)     |
+---
 ## 1. Генерация исходных данных
 
 **Файл**: `generate.py`
