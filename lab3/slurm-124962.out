@@ -1,0 +1,25 @@
+whoami: cannot find name for user ID 1121069310
+Processing Test 1: matrices/matrixA_1.txt x matrices/matrixB_1.txt
+Execution time: 0.00260687 seconds.
+Processing Test 2: matrices/matrixA_2.txt x matrices/matrixB_2.txt
+Execution time: 0.072196 seconds.
+Processing Test 3: matrices/matrixA_3.txt x matrices/matrixB_3.txt
+Execution time: 0.351086 seconds.
+Processing Test 4: matrices/matrixA_4.txt x matrices/matrixB_4.txt
+Execution time: 1.16338 seconds.
+Processing Test 5: matrices/matrixA_5.txt x matrices/matrixB_5.txt
+Execution time: 2.57958 seconds.
+Processing Test 6: matrices/matrixA_6.txt x matrices/matrixB_6.txt
+Execution time: 4.74876 seconds.
+Processing Test 7: matrices/matrixA_7.txt x matrices/matrixB_7.txt
+Execution time: 8.1017 seconds.
+Processing Test 8: matrices/matrixA_8.txt x matrices/matrixB_8.txt
+Execution time: 12.9125 seconds.
+Processing Test 9: matrices/matrixA_9.txt x matrices/matrixB_9.txt
+Execution time: 17.3259 seconds.
+Processing Test 10: matrices/matrixA_10.txt x matrices/matrixB_10.txt
+Execution time: 27.6024 seconds.
+Processing Test 11: matrices/matrixA_11.txt x matrices/matrixB_11.txt
+Execution time: 38.2849 seconds.
+Finished processing all available matrix files.
+slurmstepd: error: *** JOB 124962 ON n239 CANCELLED AT 2025-05-22T19:44:43 DUE TO TIME LIMIT ***

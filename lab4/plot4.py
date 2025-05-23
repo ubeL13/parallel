@@ -41,7 +41,7 @@ while True:
     idx += 1
 
 plt.figure(figsize=(10, 6))
-plt.plot(sizes, times_lab1, marker='o', label='Lab 1 (no OpenMP)')
+plt.plot(sizes, times_lab1, marker='o', label='Lab 1')
 plt.plot(sizes, times_lab4, marker='s', label='Lab 2 (with cuda)')
 plt.title('Execution Time vs Matrix Size')
 plt.xlabel('Matrix Size (N x N)')
